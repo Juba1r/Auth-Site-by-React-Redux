@@ -1,4 +1,4 @@
-export default function Footer() {
+function Footer() {
   return (
     <div
       style={{
@@ -38,3 +38,5 @@ export default function Footer() {
     </div>
   );
 }
+
+export default Footer;
