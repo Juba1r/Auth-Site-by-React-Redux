@@ -1,15 +1,15 @@
 import PropTypes from "prop-types";
 import { Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const PrivateRoute = ({ element: Component }) => {
-  const isAuthenticated = localStorage.getItem("authToken");
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   return isAuthenticated ? <Component /> : <Navigate to="/login" />;
 };
 
-// PropTypes validation
 PrivateRoute.propTypes = {
-  element: PropTypes.elementType.isRequired, // Validate 'element' as a React component
+  element: PropTypes.elementType.isRequired,
 };
 
 export default PrivateRoute;
