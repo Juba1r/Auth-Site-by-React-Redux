@@ -8,8 +8,8 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
-  const [notification, setNotification] = useState(""); // For notification messages
-  const [isSuccess, setIsSuccess] = useState(false); // For styling the success message
+  const [notification, setNotification] = useState("");
+  const [isSuccess, setIsSuccess] = useState(false);
   const navigate = useNavigate();
 
   const [register, { isLoading }] = useRegisterMutation();
@@ -23,15 +23,15 @@ const Register = () => {
         setIsSuccess(true);
         setNotification("Registered successfully! Redirecting to login...");
         setTimeout(() => {
-          navigate("/login"); // Redirect after 2 seconds
-        }, 2000);
+          navigate("/login");
+        }, 1000);
       } else {
         setIsSuccess(false);
         setNotification(
           result?.message || "Registration failed! Please try again."
         );
       }
-    } catch  {
+    } catch {
       setIsSuccess(false);
       setNotification("Registration failed! Please try again.");
     }
@@ -63,7 +63,7 @@ const Register = () => {
             </div>
             <div className="mb-3 text-start">
               <label htmlFor="exampleInputPhone" className="form-label">
-                <strong>Phone No</strong>
+                <strong>Phone Number</strong>
               </label>
               <input
                 type="phone"
@@ -105,7 +105,6 @@ const Register = () => {
             </button>
           </form>
 
-          {/* Notification Message */}
           {notification && (
             <p
               className={`mt-3 ${isSuccess ? "text-success" : "text-danger"}`}

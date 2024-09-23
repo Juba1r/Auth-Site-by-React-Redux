@@ -8,7 +8,7 @@ import { setCredentials } from "../redux/authSlice";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [notification, setNotification] = useState(null); // New state for notification
+  const [notification, setNotification] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -22,20 +22,19 @@ const Login = () => {
       console.log(result);
 
       if (result.token) {
-        // Dispatch the token and user details to the store
         dispatch(setCredentials({ user: result.user, token: result.token }));
 
-        // Show success notification
         setNotification({
           message: "Login successful!",
           type: "success",
         });
-
+        console.log("LoggedIn");
         setTimeout(() => {
-          navigate("/home"); // Redirect to homepage after successful login
-        }, 1500); // Redirect after 1.5 seconds
+          navigate("/home");
+          console.log("LoggedIn 22");
+        }, 1000);
+        console.log("LoggedIn 33");
       } else {
-        // Show error notification
         setNotification({
           message: `Login failed: ${result.message}`,
           type: "error",
@@ -43,7 +42,7 @@ const Login = () => {
       }
     } catch (err) {
       console.error("Login error:", err);
-      // Show error notification
+
       setNotification({
         message: "Login failed! Please check your credentials and try again.",
         type: "error",
@@ -63,7 +62,6 @@ const Login = () => {
         <div className="bg-white p-3 rounded" style={{ width: "40%" }}>
           <h2 className="mb-3 text-primary">Login</h2>
 
-          {/* Notification box */}
           {notification && (
             <div
               className={`alert ${
@@ -83,7 +81,7 @@ const Login = () => {
                 <strong>Email Id</strong>
               </label>
               <input
-                type="email"
+                type="text"
                 placeholder="Enter Email"
                 className="form-control"
                 id="exampleInputEmail1"
