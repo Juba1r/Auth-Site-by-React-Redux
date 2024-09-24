@@ -1,8 +1,10 @@
 import { useNavigate } from "react-router-dom";
+import { useFetchProductsQuery } from "../redux/productSlice"; // Import updated query hook
 import "bootstrap/dist/css/bootstrap.min.css";
 import Footer from "../components/Footer";
 
 const Home = () => {
+  const { data: products, error, isLoading } = useFetchProductsQuery(); // Fetch products
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -10,16 +12,8 @@ const Home = () => {
     navigate("/login");
   };
 
-  const products = [
-    { id: 1, name: "Product 1", price: "$29.99", image: "/path/to/image1.jpg" },
-    { id: 2, name: "Product 2", price: "$49.99", image: "/path/to/image2.jpg" },
-    { id: 3, name: "Product 3", price: "$19.99", image: "/path/to/image3.jpg" },
-    { id: 4, name: "Product 4", price: "$39.99", image: "/path/to/image4.jpg" },
-  ];
-
   return (
     <div>
-      {/* Hero Section */}
       <div
         style={{
           backgroundImage:
@@ -39,7 +33,6 @@ const Home = () => {
         </button>
       </div>
 
-      {/* Product Section */}
       <div
         className="container-fluid py-5"
         style={{
@@ -48,19 +41,27 @@ const Home = () => {
         }}
       >
         <h2 className="text-center mb-5">Featured Products</h2>
+
         <div className="row">
-          {products.map((product) => (
-            <div key={product.id} className="col-md-3 mb-4">
+          {isLoading && <p className="text-center">Loading products...</p>}
+          {error && (
+            <p className="text-center text-danger">
+              Failed to load products: {error.message}
+            </p>
+          )}
+          {products?.data?.data?.map((product) => (
+            <div key={product.id} className="col-md-4 mb-4">
               <div className="card h-100 text-center shadow-sm">
                 <img
-                  src={product.image}
+                  src={product.file_manager?.url || "/placeholder.jpg"}
                   alt={product.name}
                   className="card-img-top"
                   style={{ maxHeight: "200px", objectFit: "cover" }}
                 />
                 <div className="card-body">
                   <h5 className="card-title">{product.name}</h5>
-                  <p className="card-text text-primary">{product.price}</p>
+                  <p className="card-text text-primary">${product.price}</p>
+                  <p className="card-text">{product.description}</p>
                   <button className="btn btn-warning">Add to Cart</button>
                 </div>
               </div>
@@ -69,65 +70,6 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Categories Section */}
-      <div
-        className="container-fluid py-5"
-        style={{
-          backgroundImage: "linear-gradient(to left, #000428, #004e92)",
-          color: "#fff",
-        }}
-      >
-        <h2 className="text-center mb-5">Shop by Category</h2>
-        <div className="row">
-          <div className="col-md-4 mb-4">
-            <div
-              className="card h-100 shadow-sm"
-              style={{
-                backgroundImage: "url('https://via.placeholder.com/400x300')",
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-              }}
-            >
-              <div className="card-body d-flex flex-column justify-content-end text-white">
-                <h4>Electronics</h4>
-                <button className="btn btn-light">Shop Now</button>
-              </div>
-            </div>
-          </div>
-          <div className="col-md-4 mb-4">
-            <div
-              className="card h-100 shadow-sm"
-              style={{
-                backgroundImage: "url('https://via.placeholder.com/400x300')",
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-              }}
-            >
-              <div className="card-body d-flex flex-column justify-content-end text-white">
-                <h4>Fashion</h4>
-                <button className="btn btn-light">Shop Now</button>
-              </div>
-            </div>
-          </div>
-          <div className="col-md-4 mb-4">
-            <div
-              className="card h-100 shadow-sm"
-              style={{
-                backgroundImage: "url('https://via.placeholder.com/400x300')",
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-              }}
-            >
-              <div className="card-body d-flex flex-column justify-content-end text-white">
-                <h4>Home & Kitchen</h4>
-                <button className="btn btn-light">Shop Now</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Footer */}
       <footer className="bg-dark text-white text-center py-4">
         <Footer />
       </footer>
