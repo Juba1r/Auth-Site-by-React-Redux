@@ -31,9 +31,7 @@ const Login = () => {
         console.log("LoggedIn");
         setTimeout(() => {
           navigate("/home");
-          console.log("LoggedIn 22");
         }, 1000);
-        console.log("LoggedIn 33");
       } else {
         setNotification({
           message: `Login failed: ${result.message}`,

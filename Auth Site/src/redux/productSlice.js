@@ -3,18 +3,18 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const productApi = createApi({
   reducerPath: "productApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://sample-ecom.parallaxlogic.dev/api/", // Base URL
+    baseUrl: "https://sample-ecom.parallaxlogic.dev/api/",
     prepareHeaders: (headers) => {
-      const token = localStorage.getItem("authToken"); // Fetch the token
+      const token = localStorage.getItem("authToken"); 
       if (token) {
-        headers.set("Authorization", `Bearer ${token}`); // Set Authorization header
+        headers.set("Authorization", `Bearer ${token}`); 
       }
       return headers;
     },
   }),
   endpoints: (builder) => ({
     fetchProducts: builder.query({
-      query: () => "user/product", // Corrected endpoint
+      query: () => "user/product", 
     }),
   }),
 });
